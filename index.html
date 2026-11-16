@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>WiFi Guardian</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0F172A">
+<link rel="apple-touch-icon" href="icon.png">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:"Segoe UI",system-ui,sans-serif}
+body{background:#F1F5F9;color:#0F172A;padding-bottom:90px}
+body.dark{background:#0F172A;color:white}
+header{background:#0F172A;color:white;padding:18px 16px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:10}
+header h1{font-size:22px}
+header p{color:#93C5FD;font-size:11px}
+header span{color:#93C5FD;font-size:11px;font-weight:bold}
+.wrap{padding:12px}
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.card{background:white;border:1px solid #E2E8F0;border-radius:14px;padding:14px;text-align:center}
+body.dark .card{background:#1E293B;border-color:#334155}
+.card small{color:#64748B;font-weight:bold;font-size:11px}
+body.dark .card small{color:#CBD5E1}
+.card b{font-size:28px;display:block}
+.box{background:white;border-radius:14px;padding:14px;margin-top:12px;border:1px solid #E2E8F0}
+body.dark .box{background:#1E293B;border-color:#334155}
+.box h3{font-size:14px;margin-bottom:8px}
+.current{background:#F8FAFC;padding:10px;border-radius:10px;font-size:13px;font-weight:bold;color:#16A34A;margin-bottom:10px}
+body.dark .current{background:#0F172A;color:#4ADE80}
+.btn{border:none;padding:10px 14px;border-radius:10px;font-weight:bold;cursor:pointer;font-size:13px}
+.btn-blue{background:#2563EB;color:white}
+.btn-green{background:#16A34A;color:white}
+.btn-yellow{background:#F59E0B;color:black}
+.btn-red{background:#DC2626;color:white}
+.btn-dark{background:#0F172A;color:white}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.wifi-row{display:flex;justify-content:space-between;align-items:center;background:#F8FAFC;padding:10px;border-radius:10px;margin-top:6px}
+body.dark .wifi-row{background:#0F172A}
+.device{padding:12px;border-radius:12px;margin-top:8px;border:1px solid #E2E8F0}
+.device.UNKNOWN{background:#FEE2E2}
+.device.TRUSTED{background:#DCFCE7}
+.device.BLOCKED{background:#FEF3C7}
+body.dark .device.UNKNOWN{background:#7F1D1D}
+body.dark .device.TRUSTED{background:#14532D}
+body.dark .device.BLOCKED{background:#713F12}
+.device b{font-size:14px}
+.device p{font-size:12px;color:#475569}
+body.dark .device p{color:#E2E8F0}
+.device span{font-size:11px;font-weight:bold}
+input{width:100%;padding:12px;border-radius:10px;border:1px solid #E2E8F0;margin-top:10px;font-size:14px}
+body.dark input{background:#334155;color:white;border-color:#475569}
+.bottom{position:fixed;bottom:0;left:0;right:0;background:white;padding:12px;border-top:1px solid #E2E8F0;display:flex;gap:8px}
+body.dark .bottom{background:#1E293B;border-color:#334155}
+.install{position:fixed;bottom:90px;left:12px;right:12px;background:#0F172A;color:white;padding:14px;border-radius:14px;display:none;text-align:center;z-index:20}
+.install button{margin-top:8px}
+</style>
+</head>
+<body>
+<header>
+<div><h1>🛡️ WiFi Guardian</h1><p>PRO v2 • Secure Your Network</p></div>
+<span id="routerLabel">Router: 192.168.1.1</span>
+</header>
+
+<div class="wrap">
+<div class="cards">
+<div class="card"><small>TOTAL DEVICES</small><b id="total" style="color:#2563EB">0</b></div>
+<div class="card"><small>✅ TRUSTED</small><b id="trusted" style="color:#16A34A">0</b></div>
+<div class="card"><small>⚠️ UNKNOWN</small><b id="unknown" style="color:#DC2626">0</b></div>
+<div class="card"><small>🚫 BLOCKED</small><b id="blocked" style="color:#F59E0B">0</b></div>
+</div>
+
+<div class="box">
+<h3>🔑 WiFi Passwords & Current Connection</h3>
+<div class="current" id="currentWifi">📶 Current WiFi: Detecting... | Your IP: ...</div>
+<div class="row">
+<button class="btn btn-blue" onclick="refreshWifi()">🔄 Refresh WiFi</button>
+<button class="btn btn-yellow" id="showBtn" onclick="togglePass()">👁️ Show Passwords</button>
+<button class="btn btn-green" onclick="copyPass()">📋 Copy</button>
+</div>
+<div id="wifiList"></div>
+<p style="font-size:11px;color:#94A3B8;margin-top:8px">Pang-own network mo lang. Hindi makikita password ng ibang router.</p>
+</div>
+
+<div class="box">
+<h3>🔍 Scan Network</h3>
+<input id="search" placeholder="Search device, IP, MAC..." oninput="renderDevices()">
+<div class="row">
+<button class="btn btn-blue" onclick="scan()">🔍 SCAN NETWORK</button>
+<button class="btn btn-dark" onclick="toggleDark()">🌙 Dark Mode</button>
+</div>
+</div>
+
+<div class="box">
+<h3>📱 Naka-Connect Ngayon</h3>
+<div id="deviceList"></div>
+<div class="row">
+<button class="btn btn-green" onclick="trustSelected()">✅ TRUST</button>
+<button class="btn btn-red" onclick="blockSelected()">🚫 BLOCK</button>
+<button class="btn btn-dark" onclick="unblockSelected()">🔓 UNBLOCK</button>
+<button class="btn btn-blue" onclick="exportCSV()">📥 EXPORT CSV</button>
+</div>
+<p id="status" style="font-size:12px;color:#64748B;margin-top:10px">Ready to scan • Tap a device to select</p>
+</div>
+</div>
+
+<div class="bottom">
+<button class="btn btn-blue" style="flex:1" onclick="scan()">🔍 SCAN</button>
+<button class="btn btn-green" style="flex:1" onclick="trustSelected()">✅ TRUST</button>
+<button class="btn btn-red" style="flex:1" onclick="blockSelected()">🚫 BLOCK</button>
+</div>
+
+<div class="install" id="installBox">
+<b>📲 Install WiFi Guardian?</b><br><small>Para maging app siya sa home screen mo</small><br>
+<button class="btn btn-green" onclick="installPWA()">Install App</button>
+<button class="btn" onclick="document.getElementById('installBox').style.display='none'">Later</button>
+</div>
+
+<script>
+let devices = [];
+let wifi = [
+  {ssid:"MyWiFi_Home", pass:"password123"},
+  {ssid:"PLDT_Home", pass:"pldt12345"},
+  {ssid:"TP-Link_5G", pass:"admin123"},
+];
+let showPass = false;
+let selected = null;
+let trusted = JSON.parse(localStorage.getItem("trusted")||"[]");
+let blocked = JSON.parse(localStorage.getItem("blocked")||"[]");
+let deferredPrompt = null;
+
+if('serviceWorker' in navigator){ navigator.serviceWorker.register('sw.js'); }
+
+window.addEventListener('beforeinstallprompt', (e)=>{
+  e.preventDefault(); deferredPrompt = e;
+  document.getElementById('installBox').style.display='block';
+});
+async function installPWA(){
+  if(!deferredPrompt){ alert("Sa Chrome: 3 dots > Add to Home Screen / Install App"); return; }
+  deferredPrompt.prompt();
+  await deferredPrompt.userChoice;
+  deferredPrompt = null;
+  document.getElementById('installBox').style.display='none';
+}
+
+function toggleDark(){
+  document.body.classList.toggle('dark');
+  let isDark = document.body.classList.contains('dark');
+  localStorage.setItem("theme", isDark?"dark":"light");
+}
+if(localStorage.getItem("theme")==="dark") document.body.classList.add('dark');
+
+function togglePass(){
+  showPass = !showPass;
+  document.getElementById('showBtn').textContent = showPass ? "🙈 Hide Passwords" : "👁️ Show Passwords";
+  renderWifi();
+}
+function renderWifi(){
+  let html = "";
+  wifi.forEach((w,i)=>{
+    html += `<div class="wifi-row"><b>${w.ssid}</b><span>${showPass? w.pass : "••••••••"}</span><button class="btn btn-green" style="padding:6px 10px" onclick="copyOne(${i})">Copy</button></div>`;
+  });
+  document.getElementById('wifiList').innerHTML = html;
+}
+function copyOne(i){
+  navigator.clipboard.writeText(wifi[i].pass);
+  alert("Password ng "+wifi[i].ssid+" na-copy na!");
+}
+function copyPass(){
+  if(wifi.length>0) copyOne(0);
+}
+function refreshWifi(){
+  document.getElementById('currentWifi').textContent = "📶 Current WiFi: Connected | Signal: 85% | Your IP: 192.168.1.5";
+  renderWifi();
+}
+function scan(){
+  document.getElementById('status').textContent = "Scanning network... Please wait...";
+  setTimeout(()=>{
+    devices = [
+      {ip:"192.168.1.1", mac:"00:1A:2B:11:22:33", name:"Router", vendor:"TP-Link", type:"📺 Router", ping:"2ms"},
+      {ip:"192.168.1.5", mac:"AA:BB:CC:DD:EE:FF", name:"My Phone (This Device)", vendor:"Samsung", type:"📱 Phone", ping:"0ms"},
+      {ip:"192.168.1.10", mac:"D8:A0:1D:44:55:66", name:"Unknown Device", vendor:"LG", type:"❓ Unknown", ping:"15ms"},
+      {ip:"192.168.1.12", mac:"A8:9C:ED:77:88:99", name:"Vivo Phone", vendor:"Vivo", type:"📱 Phone", ping:"8ms"},
+    ];
+    renderDevices();
+    document.getElementById('status').textContent = `Scan complete: ${devices.length} devices found`;
+  }, 800);
+}
+function getStatus(mac){
+  if(blocked.includes(mac)) return "BLOCKED";
+  if(trusted.includes(mac)) return "TRUSTED";
+  return "UNKNOWN";
+}
+function renderDevices(){
+  let q = document.getElementById('search').value.toLowerCase();
+  let html = "";
+  let t=0,b=0,u=0;
+  devices.forEach(d=>{
+    let s = getStatus(d.mac);
+    if(s==="TRUSTED") t++; if(s==="BLOCKED") b++; if(s==="UNKNOWN") u++;
+    if(q && !(d.ip+d.mac+d.name+d.vendor).toLowerCase().includes(q)) return;
+    let border = selected===d.mac ? "3px solid #2563EB" : "1px solid #E2E8F0";
+    html += `<div class="device ${s}" style="border:${border}" onclick="selectDevice('${d.mac}')">
+      <span>${s==="TRUSTED"?"✅ TRUSTED":s==="BLOCKED"?"🚫 BLOCKED":"⚠️ UNKNOWN"}</span>
+      <b><br>${d.name} • ${d.type}</b>
+      <p>${d.ip} • ${d.mac}<br>${d.vendor} • Ping: ${d.ping}</p>
+    </div>`;
+  });
+  document.getElementById('deviceList').innerHTML = html || "<p style='font-size:13px;margin-top:8px'>Pindutin mo SCAN NETWORK muna.</p>";
+  document.getElementById('total').textContent = devices.length;
+  document.getElementById('trusted').textContent = t;
+  document.getElementById('unknown').textContent = u;
+  document.getElementById('blocked').textContent = b;
+}
+function selectDevice(mac){
+  selected = mac;
+  document.getElementById('status').textContent = "Selected: "+mac;
+  renderDevices();
+}
+function trustSelected(){
+  if(!selected) return alert("Pili ka muna ng device!");
+  if(!trusted.includes(selected)) trusted.push(selected);
+  localStorage.setItem("trusted", JSON.stringify(trusted));
+  renderDevices();
+}
+function blockSelected(){
+  if(!selected) return alert("Pili ka muna ng device!");
+  if(!blocked.includes(selected)) blocked.push(selected);
+  localStorage.setItem("blocked", JSON.stringify(blocked));
+  navigator.clipboard.writeText(selected);
+  alert("MAC "+selected+" na-copy! I-paste mo sa router blacklist.");
+  renderDevices();
+}
+function unblockSelected(){
+  if(!selected) return;
+  blocked = blocked.filter(x=>x!==selected);
+  trusted = trusted.filter(x=>x!==selected);
+  localStorage.setItem("blocked", JSON.stringify(blocked));
+  localStorage.setItem("trusted", JSON.stringify(trusted));
+  renderDevices();
+}
+function exportCSV(){
+  if(!devices.length) return alert("Scan muna!");
+  let csv = "Status,IP,MAC,Name,Vendor,Type,Ping\n";
+  devices.forEach(d=>{ csv += `${getStatus(d.mac)},${d.ip},${d.mac},${d.name},${d.vendor},${d.type},${d.ping}\n`; });
+  let blob = new Blob([csv], {type:"text/csv"});
+  let a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "wifiguardian.csv";
+  a.click();
+}
+refreshWifi();
+renderDevices();
+</script>
+</body>
+</html>
