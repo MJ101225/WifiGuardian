@@ -4,47 +4,252 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MARK JAY L. AGNAS | Official Website</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 <style>
-  *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial,sans-serif}
-  body{background:#f0f2f5;color:#1c1e21}
-  nav{display:flex;justify-content:space-between;align-items:center;padding:14px 6%;position:fixed;width:100%;background:#fff;box-shadow:0 2px 10px rgba(0,0,0,.1);z-index:100;top:0}
-  .logo{font-size:26px;font-weight:900;color:#1877F2}.logo span{color:#1c1e21;font-size:15px}
-  nav a{color:#65676b;text-decoration:none;margin-left:10px;font-weight:600;font-size:14px;padding:8px 14px;border-radius:20px}
-  nav a:hover{background:#E7F3FF;color:#1877F2}
-  .hero{padding:120px 5% 30px;background:linear-gradient(135deg,#1877F2,#42a5f5,#0a5ad6);text-align:center;color:#fff}
-  .card{background:#fff;max-width:650px;margin:0 auto;padding:30px;border-radius:20px;color:#1c1e21;box-shadow:0 15px 40px rgba(0,0,0,.25)}
-  .card img{width:140px;height:140px;border-radius:50%;object-fit:cover;border:5px solid #1877F2}
-  .card h1{font-size:38px;line-height:1.1;margin:10px 0}.card h1 span{color:#1877F2}
-  .card p{color:#65676b}
-  .btn{background:#1877F2;color:#fff;padding:12px 22px;border-radius:10px;text-decoration:none;font-weight:800;display:inline-block;margin-top:15px;border:none;cursor:pointer}
-  .btn2{background:#E4E6EB;color:#1c1e21;margin-left:8px}
-  section{max-width:1000px;margin:0 auto;padding:50px 5%}
-  h2{font-size:30px;margin-bottom:18px}h2 span{color:#1877F2}
-  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:15px}
-  .box{background:#fff;padding:22px;border-radius:14px;box-shadow:0 2px 10px rgba(0,0,0,.07)}
-  .box p{color:#65676b;font-size:14px}
-  input,textarea{width:100%;padding:13px;margin-bottom:10px;background:#F0F2F5;border:1px solid #ddd;border-radius:10px;outline:none}
-  footer{text-align:center;padding:25px;background:#fff;color:#65676b}
+  :root{ --blue:#1877F2; --blue-dark:#0a5ad6; --light-blue:#E7F3FF; --bg:#f0f2f5; --card:#ffffff; --text:#1c1e21; --muted:#65676b; --border:#ddd; }
+  body.dark{ --bg:#0f1419; --card:#1a222d; --text:#e4e6eb; --muted:#b0b3b8; --border:#2f3a46; --light-blue:#1e2e42; }
+  *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial,sans-serif;scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--text);transition:.3s;overflow-x:hidden}
+  nav{display:flex;justify-content:space-between;align-items:center;padding:12px 5%;position:fixed;width:100%;background:var(--card);box-shadow:0 2px 15px rgba(0,0,0,.1);z-index:1000;top:0}
+  .logo{font-size:26px;font-weight:900;color:var(--blue);letter-spacing:-1px;cursor:pointer}
+  .logo span{color:var(--text);font-size:15px;font-weight:700}
+  .nav-links{display:flex;gap:5px;align-items:center}
+  .nav-links a{color:var(--muted);text-decoration:none;font-weight:600;font-size:14px;padding:9px 14px;border-radius:20px}
+  .nav-links a:hover,.nav-links a.active{background:var(--light-blue);color:var(--blue)}
+  .nav-btn{border:none;cursor:pointer;width:38px;height:38px;border-radius:50%;background:var(--bg);font-size:16px}
+  .hero{padding:110px 5% 30px;background:linear-gradient(135deg,#1877F2 0%,#42a5f5 40%,#0a5ad6 100%);position:relative;overflow:hidden}
+  .hero::before{content:"";position:absolute;width:500px;height:500px;background:rgba(255,255,255,.12);border-radius:50%;top:-150px;right:-100px}
+  .hero::after{content:"";position:absolute;width:300px;height:300px;background:rgba(255,255,255,.1);border-radius:50%;bottom:-100px;left:-80px}
+  .hero-wrap{max-width:1100px;margin:0 auto;display:flex;gap:30px;align-items:center;flex-wrap:wrap;position:relative;z-index:2}
+  .hero-left{flex:1.2;min-width:300px;color:white}
+  .hero-left .badge{background:rgba(255,255,255,.2);backdrop-filter:blur(10px);padding:7px 14px;border-radius:20px;font-size:12px;font-weight:800;letter-spacing:1px}
+  .hero-left h1{font-size:52px;line-height:.95;margin:15px 0 12px;text-shadow:0 2px 10px rgba(0,0,0,.2)}
+  .hero-left h1 span{color:#FFE500}
+  .hero-left p{opacity:.92;font-size:17px;max-width:480px}
+  .hero-stats{display:flex;gap:15px;margin:22px 0}
+  .stat{background:rgba(255,255,255,.15);backdrop-filter:blur(10px);padding:12px 18px;border-radius:14px;text-align:center;flex:1}
+  .stat b{font-size:22px;display:block}
+  .stat span{font-size:12px;opacity:.9}
+  .hero-right{flex:.8;min-width:280px}
+  .profile-card{background:white;color:#1c1e21;border-radius:22px;padding:20px;text-align:center;box-shadow:0 20px 50px rgba(0,0,0,.25);transform:rotate(1deg)}
+  .profile-card img{width:160px;height:160px;border-radius:50%;object-fit:cover;border:5px solid #1877F2;margin-top:-75px;background:#e4e6eb}
+  .profile-card h2{font-size:22px;margin-top:10px}
+  .profile-card p{color:#65676b;font-size:14px}
+  .socials{display:flex;justify-content:center;gap:10px;margin:15px 0}
+  .socials a{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;text-decoration:none;font-size:18px}
+  .fb{background:#1877F2}.ig{background:linear-gradient(45deg,#feda75,#fa7e1e,#d62976,#962fbf,#4f5bd5)}.tk{background:#000}.yt{background:#FF0000}
+  .btn{padding:12px 22px;border-radius:10px;border:none;font-weight:800;cursor:pointer;text-decoration:none;display:inline-block;font-size:14px}
+  .btn-white{background:white;color:#1877F2}.btn-blue{background:var(--blue);color:white}.btn-ghost{background:rgba(255,255,255,.2);color:white;border:1px solid rgba(255,255,255,.4)}
+  section{max-width:1100px;margin:0 auto;padding:55px 5%}
+  .sec-head{display:flex;justify-content:space-between;align-items:end;margin-bottom:22px;flex-wrap:wrap;gap:10px}
+  .sec-head h2{font-size:32px;line-height:1}
+  .sec-head h2 span{color:var(--blue)}
+  .sec-head p{color:var(--muted);font-size:14px}
+  .card{background:var(--card);border-radius:16px;padding:22px;box-shadow:0 2px 12px rgba(0,0,0,.07);border:1px solid var(--border)}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px}
+  .about-grid{display:grid;grid-template-columns:1.3fr .7fr;gap:18px}
+  .skill-bar{margin:14px 0}
+  .skill-bar label{display:flex;justify-content:space-between;font-size:13px;font-weight:700;margin-bottom:6px}
+  .bar{height:10px;background:var(--bg);border-radius:20px;overflow:hidden}
+  .fill{height:100%;background:linear-gradient(90deg,#1877F2,#42a5f5);border-radius:20px;width:0;transition:1s}
+  .filter{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+  .filter button{padding:8px 16px;border-radius:20px;border:1px solid var(--border);background:var(--card);color:var(--text);cursor:pointer;font-weight:700;font-size:13px}
+  .filter button.active{background:var(--blue);color:white;border-color:var(--blue)}
+  .search{width:100%;padding:13px 16px;border-radius:12px;border:1px solid var(--border);background:var(--card);color:var(--text);outline:none;margin-bottom:18px}
+  .proj-card{overflow:hidden;padding:0;cursor:pointer;transition:.3s}
+  .proj-card:hover{transform:translateY(-6px);box-shadow:0 15px 30px rgba(24,119,242,.2)}
+  .proj-img{height:160px;display:flex;align-items:center;justify-content:center;font-size:55px;color:white}
+  .proj-body{padding:18px}
+  .tag{font-size:11px;background:var(--light-blue);color:var(--blue);padding:4px 10px;border-radius:20px;font-weight:800}
+  .gallery{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  .gallery img{width:100%;height:140px;object-fit:cover;border-radius:12px;cursor:pointer;transition:.3s}
+  .gallery img:hover{transform:scale(1.03)}
+  .contact-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:18px}
+  input,textarea,select{width:100%;padding:13px;border-radius:10px;border:1px solid var(--border);background:var(--bg);color:var(--text);outline:none;margin-bottom:12px;font-size:14px}
+  input:focus,textarea:focus{border-color:var(--blue);background:var(--card)}
+  .toast{position:fixed;bottom:20px;right:20px;background:#1c1e21;color:white;padding:14px 18px;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.3);display:none;z-index:2000;max-width:320px}
+  .modal{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;z-index:3000;padding:20px}
+  .modal-box{background:var(--card);max-width:500px;width:100%;border-radius:18px;padding:22px;position:relative}
+  .close{position:absolute;right:15px;top:12px;border:none;background:var(--bg);width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:16px}
+  .float-btn{position:fixed;bottom:20px;left:20px;background:var(--blue);color:white;border:none;width:55px;height:55px;border-radius:50%;font-size:22px;cursor:pointer;box-shadow:0 10px 25px rgba(24,119,242,.4);z-index:1500}
+  footer{text-align:center;padding:30px;color:var(--muted);background:var(--card);border-top:1px solid var(--border)}
+  @media(max-width:768px){.hero-left h1{font-size:36px}.about-grid,.contact-grid{grid-template-columns:1fr}.gallery{grid-template-columns:repeat(2,1fr)}.nav-links a.hide-m{display:none}.hero-stats{flex-wrap:wrap}}
+  .reveal{opacity:0;transform:translateY(20px);transition:.6s}.reveal.show{opacity:1;transform:none}
 </style>
 </head>
 <body>
-<nav><div class="logo">markjay<span> .agnas</span></div><div><a href="#home">Home</a><a href="#about">About</a><a href="#projects">Projects</a><a href="#contact">Contact</a></div></nav>
-<div class="hero" id="home"><div class="card">
-<img src="https://i.pravatar.cc/300?img=12" alt="Mark Jay">
-<h1>Kamusta, ako si<br><span>MARK JAY L. AGNAS</span></h1>
-<p id="greet" style="color:#1877F2;font-weight:800;margin:8px 0;"></p>
-<p>Creator • Aspiring Developer • Mula sa Donsol, Sorsogon. Ito yung sarili kong website.</p>
-<a href="#projects" class="btn">🚀 Tingnan Projects</a>
-<a href="#contact" class="btn btn2">💬 Message Mo Ako</a>
-</div></div>
-<section id="about"><h2>Tungkol <span>Sa Akin</span></h2><div class="box"><p>Ako si <b>Mark Jay L. Agnas</b> mula sa Donsol, Sorsogon. Mahilig ako sa pag-code, gaming, music, at paggawa ng content. Pangarap ko maging successful developer at creator.</p><p style="margin-top:10px;"><b>📍</b> Donsol, Sorsogon | <b>🎯</b> Maging Developer | <b>🟢</b> Online Ngayon</p></div></section>
-<section id="projects"><h2>Mga <span>Projects</span> Ko</h2><div class="grid"><div class="box"><h3>🌐 Personal Website</h3><p>Ito mismo! Yung website na tinitingnan mo.</p></div><div class="box"><h3>🎮 Gaming Highlights</h3><p>Mga best plays ko sa ML, Roblox, at iba pa.</p></div><div class="box"><h3>🎬 Vlog & Content</h3><p>Mga vlogs ko sa Donsol at daily life.</p></div></div></section>
-<section id="contact"><h2>Message <span>Mo Ako</span></h2><div class="box"><form onsubmit="sendMsg(event)"><input id="name" placeholder="Pangalan mo" required><input placeholder="Email mo" required><textarea rows="4" placeholder="Message mo kay Mark Jay..." required></textarea><button class="btn" style="width:100%;">Send Message →</button><p id="sent" style="color:#42B72A;font-weight:800;text-align:center;margin-top:10px;"></p></form></div></section>
-<footer>© 2026 MARK JAY L. AGNAS - Made with ❤️ in Donsol 💙</footer>
+<nav>
+  <div class="logo" onclick="window.scrollTo({top:0,behavior:'smooth'})">markjay<span> .agnas</span></div>
+  <div class="nav-links">
+    <a href="#home" class="active hide-m">Home</a>
+    <a href="#about" class="hide-m">About</a>
+    <a href="#projects" class="hide-m">Projects</a>
+    <a href="#gallery" class="hide-m">Gallery</a>
+    <a href="#contact" class="hide-m">Contact</a>
+    <button class="nav-btn" onclick="toggleDark()" title="Dark Mode">🌙</button>
+    <button class="nav-btn" style="background:var(--blue);color:white" onclick="showToast('Welcome sa website ni Mark Jay! 💙')">🔔</button>
+  </div>
+</nav>
+<div class="hero" id="home">
+  <div class="hero-wrap">
+    <div class="hero-left">
+      <span class="badge">✦ OFFICIAL WEBSITE • EST. 2026</span>
+      <h1>Kamusta,<br>Ako si <span>MARK JAY</span><br>L. AGNAS</h1>
+      <p id="greeting" style="font-weight:800;color:#FFE500;margin-bottom:8px;"></p>
+      <p>Creator • Aspiring Developer • Mula sa Donsol, Sorsogon. Gumagawa ako ng websites, content, at mga bagay na magugustuhan mo.</p>
+      <div class="hero-stats">
+        <div class="stat"><b><span id="count1">0</span>+</b><span>Projects</span></div>
+        <div class="stat"><b><span id="count2">0</span>+</b><span>Followers</span></div>
+        <div class="stat"><b>100%</b><span>Dedication</span></div>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;">
+        <a href="#projects" class="btn btn-white">🚀 Tingnan Projects</a>
+        <a href="#contact" class="btn btn-ghost">💬 Message Mo Ako</a>
+      </div>
+      <p style="margin-top:14px;font-size:13px;opacity:.85;">📍 Donsol, Sorsogon • 🟢 Online Ngayon</p>
+    </div>
+    <div class="hero-right">
+      <div class="profile-card">
+        <img src="https://i.pravatar.cc/300?img=12" alt="Mark Jay">
+        <h2>MARK JAY L. AGNAS</h2>
+        <p>@markjay.agnas • Content Creator</p>
+        <div class="socials">
+          <a class="fb" href="#" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+          <a class="ig" href="#" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          <a class="tk" href="#" title="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+          <a class="yt" href="#" title="YouTube"><i class="fa-brands fa-youtube"></i></a>
+        </div>
+        <button class="btn btn-blue" style="width:100%;" onclick="followMe()">+ Follow Me</button>
+        <button class="btn" style="width:100%;margin-top:8px;background:#E4E6EB;color:#1c1e21;" onclick="copyLink()">🔗 Copy Profile Link</button>
+        <p id="followMsg" style="font-size:13px;color:#42B72A;font-weight:700;margin-top:8px;"></p>
+      </div>
+    </div>
+  </div>
+</div>
+<section id="about" class="reveal">
+  <div class="sec-head"><div><h2>Tungkol <span>Sa Akin</span></h2><p>Kilalanin mo pa ako ng mas malalim</p></div><span style="background:var(--light-blue);color:var(--blue);padding:8px 14px;border-radius:20px;font-weight:800;font-size:13px;">⭐ VERIFIED CREATOR</span></div>
+  <div class="about-grid">
+    <div class="card">
+      <h3>👋 Kwento Ko</h3>
+      <p style="color:var(--muted);margin:10px 0;">Ako si <b style="color:var(--text)">Mark Jay L. Agnas</b> mula sa Donsol, Sorsogon. Mahilig ako sa pag-code, gaming, music, at paggawa ng content. Pangarap ko na maging successful developer at creator na makakatulong sa ibang tao.</p>
+      <p style="color:var(--muted);">Sa website na to, makikita mo lahat ng projects, gallery, at updates ko. Follow mo ako para hindi ka mahuli!</p>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:16px;">
+        <span class="tag">📍 Donsol</span><span class="tag">🎮 Gamer</span><span class="tag">💻 Coder</span><span class="tag">🎵 Music Lover</span><span class="tag">📸 Creator</span>
+      </div>
+      <div style="margin-top:18px;display:flex;gap:10px;">
+        <button class="btn btn-blue" onclick="showToast('CV ni Mark Jay - Soon! 😎')">📄 Download CV</button>
+        <button class="btn" style="background:var(--bg);color:var(--text);" onclick="showToast('Salamat sa pagbisita! 💙')">❤️ Support Me</button>
+      </div>
+    </div>
+    <div class="card">
+      <h3>⚡ My Skills</h3>
+      <div class="skill-bar"><label><span>HTML / CSS</span><span>90%</span></label><div class="bar"><div class="fill" data-w="90%"></div></div></div>
+      <div class="skill-bar"><label><span>JavaScript</span><span>75%</span></label><div class="bar"><div class="fill" data-w="75%"></div></div></div>
+      <div class="skill-bar"><label><span>Video Editing</span><span>85%</span></label><div class="bar"><div class="fill" data-w="85%"></div></div></div>
+      <div class="skill-bar"><label><span>Content Creation</span><span>95%</span></label><div class="bar"><div class="fill" data-w="95%"></div></div></div>
+      <p style="font-size:12px;color:var(--muted);margin-top:10px;">* Scroll ka pababa para makita yung animation ng skills</p>
+    </div>
+  </div>
+</section>
+<section id="projects" class="reveal">
+  <div class="sec-head"><div><h2>Mga <span>Projects</span> Ko</h2><p>Mag-search o mag-filter ng projects</p></div><span id="projCount" style="font-weight:800;color:var(--blue);">3 Projects</span></div>
+  <input class="search" id="searchInput" placeholder="🔍 Maghanap ng project... hal. gaming, website..." oninput="filterProjects()">
+  <div class="filter">
+    <button class="active" onclick="setFilter('all',this)">All</button>
+    <button onclick="setFilter('web',this)">🌐 Website</button>
+    <button onclick="setFilter('game',this)">🎮 Gaming</button>
+    <button onclick="setFilter('content',this)">🎬 Content</button>
+  </div>
+  <div class="grid" id="projGrid"></div>
+</section>
+<section id="gallery" class="reveal">
+  <div class="sec-head"><div><h2>My <span>Gallery</span></h2><p>Click mo yung picture para lumaki</p></div><button class="btn btn-blue" onclick="showToast('Gusto mo magpa-shoutout? Message mo ako!')">📸 Add Photo</button></div>
+  <div class="gallery">
+    <img src="https://picsum.photos/400/300?random=1" onclick="openImg(this.src)">
+    <img src="https://picsum.photos/400/300?random=2" onclick="openImg(this.src)">
+    <img src="https://picsum.photos/400/300?random=3" onclick="openImg(this.src)">
+    <img src="https://picsum.photos/400/300?random=4" onclick="openImg(this.src)">
+    <img src="https://picsum.photos/400/300?random=5" onclick="openImg(this.src)">
+    <img src="https://picsum.photos/400/300?random=6" onclick="openImg(this.src)">
+    <img src="https://picsum.photos/400/300?random=7" onclick="openImg(this.src)">
+    <img src="https://picsum.photos/400/300?random=8" onclick="openImg(this.src)">
+  </div>
+</section>
+<section id="contact" class="reveal">
+  <div class="sec-head"><div><h2>Message <span>Mo Ako</span></h2><p>Reply ako agad pag online ako</p></div></div>
+  <div class="contact-grid">
+    <div class="card">
+      <h3>📞 Contact Info</h3>
+      <p style="color:var(--muted);margin:12px 0;line-height:2;">
+        📍 <b>Donsol, Sorsogon, Philippines</b><br>
+        📧 <b>markjay.agnas@gmail.com</b><br>
+        📱 <b>Facebook: Mark Jay L. Agnas</b><br>
+        ⏰ <b>Online: 8AM - 10PM</b><br>
+        🟢 <b>Status: Active Now</b>
+      </p>
+      <div style="background:var(--light-blue);padding:14px;border-radius:12px;">
+        <b style="color:var(--blue);">💡 Fun Fact:</b><br><span style="font-size:13px;color:var(--muted);">Bukas ang inbox ko palagi. Kahit hi lang, reply ako!</span>
+      </div>
+    </div>
+    <div class="card">
+      <form onsubmit="sendMsg(event)">
+        <input type="text" id="name" placeholder="Pangalan mo *" required>
+        <input type="email" placeholder="Email mo *" required>
+        <select><option>Anong topic?</option><option>Collab</option><option>Shoutout</option><option>Project</option><option>Hi lang!</option></select>
+        <textarea rows="4" id="msg" placeholder="Message mo kay Mark Jay..." required></textarea>
+        <button class="btn btn-blue" type="submit" style="width:100%;">Send Message →</button>
+        <p id="sent" style="text-align:center;color:#42B72A;font-weight:800;margin-top:10px;"></p>
+      </form>
+    </div>
+  </div>
+</section>
+<footer>
+  <h3 style="color:var(--blue);font-size:22px;">MARK JAY L. AGNAS</h3>
+  <p>Made with ❤️ in Donsol, Sorsogon • © 2026 All Rights Reserved</p>
+  <p style="font-size:13px;margin-top:8px;">Follow mo ako sa FB • IG • TikTok • YouTube</p>
+</footer>
+<button class="float-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})">⬆️</button>
+<div class="toast" id="toast"></div>
+<div class="modal" id="modal"><div class="modal-box"><button class="close" onclick="closeModal()">✕</button><img id="modalImg" style="width:100%;border-radius:12px;"><h3 id="modalTitle" style="margin-top:12px;"></h3><p id="modalDesc" style="color:var(--muted);"></p><button class="btn btn-blue" style="width:100%;margin-top:12px;" onclick="closeModal();showToast('Salamat sa pag-check! 💙')">Gusto Ko To ❤️</button></div></div>
 <script>
-const h=new Date().getHours();let g="Magandang Gabi!";if(h<12)g="Magandang Umaga!";else if(h<18)g="Magandang Hapon!";
-document.getElementById('greet').innerText=g+" Welcome sa website ko!";
-function sendMsg(e){e.preventDefault();const n=document.getElementById('name').value;document.getElementById('sent').innerText="Salamat "+n+"! Na-receive ko na message mo 💙";e.target.reset();}
+  const projects = [
+    {title:"My Personal Website", desc:"Ito mismo! Yung website na tinitingnan mo ngayon. Ginawa gamit HTML, CSS, JS.", cat:"web", emoji:"🌐", color:"#1877F2"},
+    {title:"Gaming Highlights", desc:"Mga best plays ko sa ML, Roblox, at iba pang games. Panoorin mo!", cat:"game", emoji:"🎮", color:"#7c3aed"},
+    {title:"Vlog & Content", desc:"Mga vlogs ko sa Donsol, daily life, at funny moments.", cat:"content", emoji:"🎬", color:"#db2777"},
+    {title:"School Project App", desc:"App na ginawa ko para sa school. Simple pero useful.", cat:"web", emoji:"📚", color:"#059669"},
+    {title:"Photo Editing", desc:"Mga edits ko gamit Canva at iba pang tools.", cat:"content", emoji:"📸", color:"#ea580c"},
+    {title:"Mini Game", desc:"Larong ginawa ko gamit JavaScript. Try mo laruin!", cat:"game", emoji:"🕹️", color:"#dc2626"},
+  ];
+  let currentFilter='all';
+  function renderProjects(){
+    const q=document.getElementById('searchInput').value.toLowerCase();
+    const filtered=projects.filter(p=>(currentFilter==='all'||p.cat===currentFilter)&&(p.title.toLowerCase().includes(q)||p.desc.toLowerCase().includes(q)));
+    document.getElementById('projCount').innerText=filtered.length+" Projects";
+    document.getElementById('projGrid').innerHTML=filtered.map((p,i)=>`
+      <div class="card proj-card" onclick="openProject(${projects.indexOf(p)})">
+        <div class="proj-img" style="background:${p.color}">${p.emoji}</div>
+        <div class="proj-body"><span class="tag">${p.cat.toUpperCase()}</span><h3 style="margin:8px 0 6px;">${p.title}</h3><p>${p.desc}</p><b style="color:var(--blue);">View Project →</b></div>
+      </div>`).join('') || '<p style="grid-column:1/-1;text-align:center;color:var(--muted);padding:30px;">Walang nahanap 😢 Try ibang keyword.</p>';
+  }
+  function setFilter(f,btn){currentFilter=f;document.querySelectorAll('.filter button').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderProjects();}
+  function filterProjects(){renderProjects();}
+  function openProject(i){const p=projects[i];document.getElementById('modalTitle').innerText=p.emoji+" "+p.title;document.getElementById('modalDesc').innerText=p.desc+" - Project ni Mark Jay L. Agnas.";document.getElementById('modalImg').src="https://picsum.photos/600/300?random="+(i+20);document.getElementById('modal').style.display='flex';}
+  function openImg(src){document.getElementById('modalImg').src=src;document.getElementById('modalTitle').innerText="📸 Gallery ni Mark Jay";document.getElementById('modalDesc').innerText="Ganda diba? Follow mo ako for more photos!";document.getElementById('modal').style.display='flex';}
+  function closeModal(){document.getElementById('modal').style.display='none';}
+  function toggleDark(){document.body.classList.toggle('dark');showToast(document.body.classList.contains('dark')?'Dark Mode ON 🌙':'Light Mode ON ☀️');}
+  function showToast(msg){const t=document.getElementById('toast');t.innerText=msg;t.style.display='block';setTimeout(()=>t.style.display='none',3000);}
+  let followed=false;
+  function followMe(){followed=!followed;document.getElementById('followMsg').innerText=followed?'✅ Naka-follow ka na! Salamat!':'❌ Nag-unfollow ka.';showToast(followed?'Salamat sa pag-follow! 💙':'Nag-unfollow ka 😢');}
+  function copyLink(){navigator.clipboard.writeText(location.href);showToast('Na-copy na link! Share mo na 📋');}
+  function sendMsg(e){e.preventDefault();const n=document.getElementById('name').value;document.getElementById('sent').innerText="Salamat "+n+"! Na-receive ko na message mo 💙 Reply ako agad!";e.target.reset();showToast('Message sent! 💙');}
+  const h=new Date().getHours();let g="Magandang Gabi!";if(h<12)g="Magandang Umaga!";else if(h<18)g="Magandang Hapon!";
+  document.getElementById('greeting').innerText=g+" Welcome sa website ko!";
+  function animateCount(id,target){let c=0;const iv=setInterval(()=>{c+=Math.ceil(target/40);if(c>=target){c=target;clearInterval(iv);}document.getElementById(id).innerText=c;},30);}
+  animateCount('count1',15);animateCount('count2',1200);
+  const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('show');e.target.querySelectorAll('.fill').forEach(f=>f.style.width=f.dataset.w);}});},{threshold:.15});
+  document.querySelectorAll('.reveal, .card').forEach(el=>obs.observe(el));
+  renderProjects();
+  setTimeout(()=>showToast('Welcome sa website ni MARK JAY L. AGNAS! 💙'),800);
 </script>
 </body>
 </html>
