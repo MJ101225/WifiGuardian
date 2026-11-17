@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="tl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MARK JAY L. AGNAS | Official Website</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial,sans-serif}
+  body{background:#f0f2f5;color:#1c1e21}
+  nav{display:flex;justify-content:space-between;align-items:center;padding:14px 6%;position:fixed;width:100%;background:#fff;box-shadow:0 2px 10px rgba(0,0,0,.1);z-index:100;top:0}
+  .logo{font-size:26px;font-weight:900;color:#1877F2}.logo span{color:#1c1e21;font-size:15px}
+  nav a{color:#65676b;text-decoration:none;margin-left:10px;font-weight:600;font-size:14px;padding:8px 14px;border-radius:20px}
+  nav a:hover{background:#E7F3FF;color:#1877F2}
+  .hero{padding:120px 5% 30px;background:linear-gradient(135deg,#1877F2,#42a5f5,#0a5ad6);text-align:center;color:#fff}
+  .card{background:#fff;max-width:650px;margin:0 auto;padding:30px;border-radius:20px;color:#1c1e21;box-shadow:0 15px 40px rgba(0,0,0,.25)}
+  .card img{width:140px;height:140px;border-radius:50%;object-fit:cover;border:5px solid #1877F2}
+  .card h1{font-size:38px;line-height:1.1;margin:10px 0}.card h1 span{color:#1877F2}
+  .card p{color:#65676b}
+  .btn{background:#1877F2;color:#fff;padding:12px 22px;border-radius:10px;text-decoration:none;font-weight:800;display:inline-block;margin-top:15px;border:none;cursor:pointer}
+  .btn2{background:#E4E6EB;color:#1c1e21;margin-left:8px}
+  section{max-width:1000px;margin:0 auto;padding:50px 5%}
+  h2{font-size:30px;margin-bottom:18px}h2 span{color:#1877F2}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:15px}
+  .box{background:#fff;padding:22px;border-radius:14px;box-shadow:0 2px 10px rgba(0,0,0,.07)}
+  .box p{color:#65676b;font-size:14px}
+  input,textarea{width:100%;padding:13px;margin-bottom:10px;background:#F0F2F5;border:1px solid #ddd;border-radius:10px;outline:none}
+  footer{text-align:center;padding:25px;background:#fff;color:#65676b}
+</style>
+</head>
+<body>
+<nav><div class="logo">markjay<span> .agnas</span></div><div><a href="#home">Home</a><a href="#about">About</a><a href="#projects">Projects</a><a href="#contact">Contact</a></div></nav>
+<div class="hero" id="home"><div class="card">
+<img src="https://i.pravatar.cc/300?img=12" alt="Mark Jay">
+<h1>Kamusta, ako si<br><span>MARK JAY L. AGNAS</span></h1>
+<p id="greet" style="color:#1877F2;font-weight:800;margin:8px 0;"></p>
+<p>Creator • Aspiring Developer • Mula sa Donsol, Sorsogon. Ito yung sarili kong website.</p>
+<a href="#projects" class="btn">🚀 Tingnan Projects</a>
+<a href="#contact" class="btn btn2">💬 Message Mo Ako</a>
+</div></div>
+<section id="about"><h2>Tungkol <span>Sa Akin</span></h2><div class="box"><p>Ako si <b>Mark Jay L. Agnas</b> mula sa Donsol, Sorsogon. Mahilig ako sa pag-code, gaming, music, at paggawa ng content. Pangarap ko maging successful developer at creator.</p><p style="margin-top:10px;"><b>📍</b> Donsol, Sorsogon | <b>🎯</b> Maging Developer | <b>🟢</b> Online Ngayon</p></div></section>
+<section id="projects"><h2>Mga <span>Projects</span> Ko</h2><div class="grid"><div class="box"><h3>🌐 Personal Website</h3><p>Ito mismo! Yung website na tinitingnan mo.</p></div><div class="box"><h3>🎮 Gaming Highlights</h3><p>Mga best plays ko sa ML, Roblox, at iba pa.</p></div><div class="box"><h3>🎬 Vlog & Content</h3><p>Mga vlogs ko sa Donsol at daily life.</p></div></div></section>
+<section id="contact"><h2>Message <span>Mo Ako</span></h2><div class="box"><form onsubmit="sendMsg(event)"><input id="name" placeholder="Pangalan mo" required><input placeholder="Email mo" required><textarea rows="4" placeholder="Message mo kay Mark Jay..." required></textarea><button class="btn" style="width:100%;">Send Message →</button><p id="sent" style="color:#42B72A;font-weight:800;text-align:center;margin-top:10px;"></p></form></div></section>
+<footer>© 2026 MARK JAY L. AGNAS - Made with ❤️ in Donsol 💙</footer>
+<script>
+const h=new Date().getHours();let g="Magandang Gabi!";if(h<12)g="Magandang Umaga!";else if(h<18)g="Magandang Hapon!";
+document.getElementById('greet').innerText=g+" Welcome sa website ko!";
+function sendMsg(e){e.preventDefault();const n=document.getElementById('name').value;document.getElementById('sent').innerText="Salamat "+n+"! Na-receive ko na message mo 💙";e.target.reset();}
+</script>
+</body>
+</html>
